@@ -58,7 +58,7 @@ from mingpt.trainer import Trainer
 
 train_config = Trainer.get_default_config()
 train_config.learning_rate = 5e-4 
-train_config.max_iters = 1000
+train_config.max_iters = 200
 train_config.num_workers = 0
 trainer = Trainer(train_config, model, train_dataset)
 
@@ -74,4 +74,10 @@ model.eval()
 
 #-----------------------------------------------------------------------------------------------------------------------
 
-#model.generate()
+encode = lambda s: [train_dataset.stoi[c] for c in s]#encoder
+decode = lambda l: ''.join([train_dataset.itos[i] for i in l])#decoder
+
+#print(encode("国庆"))
+#print(decode(encode("国庆")))
+
+model.generate(encode("中秋"),5)
